@@ -1,10 +1,4 @@
-from colorama import Fore, Back, Style
-
-
 class Text:
-
-    # TODO: Истрия изменений
-
     def __init__(self, text):
         self.main_text = text
         self.link = None
@@ -34,8 +28,8 @@ class List:
 
 
 class Block:
-    def __init__(self, main_name):
-        self.main_name = main_name
+    def __init__(self, name):
+        self.name = name
         self.obj = []
 
     def __str__(self):
@@ -48,11 +42,34 @@ class Block:
     def del_obj(self, obj):
         self.obj.remove()
 
+    def getBlockName(self):
+        return self.name
+
+
+class Engine:
+    def __init__(self):
+        self.globalBlock = []
+        self.listFunc = {
+            'addBlock': self.addBlock
+        }
+
+    def func(self, nameFunc):
+        return self.listFunc[nameFunc]
+
+    def addBlock(self, name):
+        self.globalBlock.append(Block(name))
+
+    def printBlock(self):
+        for block in self.globalBlock:
+            print("[] " + block.getBlockName())
+
 
 def main():
-    foo = Block('College')
-    foo.add_obj(Text('todo1'))
-    print(foo)
+    toDo = Engine()
+    toDo.printBlock()
+    toDo.func('addBlock')('asdasdasd')
+    toDo.addBlock('ASDADS')
+    toDo.printBlock()
 
 
 if __name__ == '__main__':
